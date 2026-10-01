@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BarCode Master / باركود ماستر</title>
+  </head>
+  <body>
+    <script>
+      window.addEventListener('error', function(event) {
+        var root = document.getElementById('root') || document.body;
+        var div = document.createElement('div');
+        div.style.cssText = "position:absolute;top:0;left:0;right:0;z-index:9999;padding: 24px; font-family: sans-serif; direction: ltr; background: #fff5f5; color: #c53030; border: 2px solid #fc8181; margin: 20px; border-radius: 8px;";
+        div.innerHTML = `
+          <h2 style="margin-top: 0; color: #e53e3e;">⚠️ Application Startup Error</h2>
+          <p style="font-size: 15px; color: #2d3748;">The app failed to load correctly. Diagnostic details are below:</p>
+          <pre style="background: #fff; padding: 12px; border: 1px solid #feb2b2; overflow: auto; max-height: 350px; font-family: monospace; font-size: 13px; border-radius: 4px; white-space: pre-wrap; word-break: break-all;">` + (event.error ? (event.error.stack || event.error.message) : event.message) + `</pre>
+          <p style="color: #4a5568; font-size: 14px; margin-top: 15px;">Please take a screenshot of this diagnostic screen and send it to us so we can resolve the issue immediately!</p>
+        `;
+        root.appendChild(div);
+      });
+      window.addEventListener('unhandledrejection', function(event) {
+        var details = 'Unknown Promise Rejection';
+        if (event.reason) {
+          details = event.reason.stack || event.reason.message || String(event.reason);
+        }
+        // Ignore Vite HMR WebSocket errors
+        if (details.includes('WebSocket') || details.includes('socket')) {
+          return;
+        }
+        var root = document.getElementById('root') || document.body;
+        var div = document.createElement('div');
+        div.style.cssText = "position:absolute;top:0;left:0;right:0;z-index:9999;padding: 24px; font-family: sans-serif; direction: ltr; background: #fff5f5; color: #c53030; border: 2px solid #fc8181; margin: 20px; border-radius: 8px;";
+        div.innerHTML = `
+          <h2 style="margin-top: 0; color: #e53e3e;">⚠️ Application Promise Rejection</h2>
+          <p style="font-size: 15px; color: #2d3748;">The app encountered an unhandled rejection during startup. Detail:</p>
+          <pre style="background: #fff; padding: 12px; border: 1px solid #feb2b2; overflow: auto; max-height: 350px; font-family: monospace; font-size: 13px; border-radius: 4px; white-space: pre-wrap; word-break: break-all;">` + details + `</pre>
+          <p style="color: #4a5568; font-size: 14px; margin-top: 15px;">Please take a screenshot of this diagnostic screen and send it to us!</p>
+        `;
+        root.appendChild(div);
+      });
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/components/main.tsx"></script>
+  </body>
+</html>
+

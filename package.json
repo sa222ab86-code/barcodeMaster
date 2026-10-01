@@ -1,0 +1,127 @@
+{
+  "name": "react-barcode-printer",
+  "version": "1.0.4",
+  "type": "module",
+  "main": "main.cjs",
+  "description": "Barcode Master - Professional Barcode Printer and Quotation Manager",
+  "author": "Rawaq",
+  "scripts": {
+    "dev": "tsx server.ts",
+    "lint": "tsc --noEmit",
+    "build": "vite build && (esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs || echo Server compile skipped)",
+    "start": "node dist/server.cjs",
+    "preview": "vite preview",
+    "electron:dev": "concurrently \"tsx server.ts\" \"electron .\"",
+    "electron:build": "npm run build && electron-builder",
+    "electron:build:64": "npm run build && electron-builder --win --x64",
+    "electron:build:32": "npm run build && electron-builder --win --ia32",
+    "electron:build:msix": "npm run build && electron-builder --win --x64 msix",
+    "electron:deploy": "npm run build && set GH_TOKEN=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&& electron-builder --win --x64 --publish always"
+  },
+  "dependencies": {
+    "@google/genai": "^2.4.0",
+    "adm-zip": "^0.5.17",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "electron-updater": "^6.8.9",
+    "express": "^4.21.2",
+    "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.14.0",
+    "jsbarcode": "^3.12.3",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "sql.js": "^1.12.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.14",
+    "@types/adm-zip": "^0.5.8",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "autoprefixer": "^10.4.21",
+    "canvas": "^3.2.3",
+    "concurrently": "^8.2.2",
+    "cross-env": "^10.1.0",
+    "electron": "^31.3.0",
+    "electron-builder": "^26.8.1",
+    "esbuild": "^0.25.0",
+    "jimp": "^1.6.1",
+    "png-to-ico": "^3.0.2",
+    "sharp": "^0.35.1",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.3"
+  },
+  "build": {
+    "appId": "com.rawaq.barcodemaster",
+    "productName": "BarCode Master",
+    "copyright": "Copyright © 2026",
+    "npmRebuild": false,
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "sa222ab86-code",
+        "repo": "barcodeMaster"
+      }
+    ],
+    "directories": {
+      "output": "dist_electron"
+    },
+    "icon": "assets/icon.png",
+    "asar": false,
+    "files": [
+      "dist/**/*",
+      "main.cjs",
+      "preload.cjs",
+      "package.json",
+      "share_helper.cs"
+    ],
+    "extraResources": [
+      {
+        "from": "assets/",
+        "to": "assets",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "باركود ماستر"
+    },
+    "appx": {
+      "publisher": "CN=Development",
+      "publisherDisplayName": "Rawaq",
+      "identityName": "com.rawaq.barcodemaster",
+      "displayName": "BarCode Master",
+      "languages": [
+        "ar-SA",
+        "en-US"
+      ]
+    }
+  }
+}

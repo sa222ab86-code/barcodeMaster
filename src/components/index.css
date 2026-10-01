@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700;900&family=Cairo:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Cairo", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* ============================================
+   تنسيقات عامة
+   ============================================ */
+
+.label-preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ============================================
+   شريط التمرير المخصص
+   ============================================ */
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  transition: background 0.2s ease-in-out;
+}
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+.custom-scrollbar:hover::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ============================================
+   تنسيقات الطباعة
+   ============================================ */
+
+@media print {
+  body, .barcode-container, .barcode-label-print, svg, img {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .no-print {
+    display: none !important;
+    height: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}
+
+/* ============================================
+   🔥 إصلاح حقول التاريخ في الواجهات العربية 🔥
+   ============================================ */
+
+/* الحل الأساسي */
+input[type="date"] {
+  direction: ltr !important;
+  text-align: right !important;
+  font-family: var(--font-sans) !important;
+  padding: 0.5rem 1rem;
+  padding-left: 2.5rem !important;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  min-height: 42px;
+  -webkit-appearance: textfield !important;
+  appearance: textfield !important;
+  position: relative;
+}
+
+input[type="date"]:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* إصلاح الـ Placeholder العربي */
+input[type="date"]::placeholder {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext !important;
+  color: #9ca3af;
+}
+
+/* إصلاح النص المعروض داخل الحقل */
+input[type="date"]::-webkit-datetime-edit {
+  direction: ltr !important;
+  text-align: right !important;
+  unicode-bidi: plaintext !important;
+  padding: 0;
+}
+
+input[type="date"]::-webkit-datetime-edit-text {
+  direction: ltr !important;
+  unicode-bidi: plaintext !important;
+}
+
+input[type="date"]::-webkit-datetime-edit-year-field {
+  direction: ltr !important;
+  unicode-bidi: plaintext !important;
+}
+
+input[type="date"]::-webkit-datetime-edit-month-field {
+  direction: ltr !important;
+  unicode-bidi: plaintext !important;
+}
+
+input[type="date"]::-webkit-datetime-edit-day-field {
+  direction: ltr !important;
+  unicode-bidi: plaintext !important;
+}
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  direction: ltr !important;
+}
+
+/* أيقونة التقويم */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.4);
+  position: absolute;
+  left: 0.75rem;
+  right: auto !important;
+  padding: 0;
+  margin: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* دعم Firefox */
+input[type="date"]::-moz-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.4);
+  position: absolute;
+  left: 0.75rem;
+  right: auto !important;
+}
+
+/* إخفاء النص المشوه عند عدم وجود قيمة */
+input[type="date"]:invalid::-webkit-datetime-edit {
+  color: transparent !important;
+}
+
+input[type="date"]:invalid::-webkit-datetime-edit-text {
+  color: transparent !important;
+}
+
+input[type="date"]:invalid::-webkit-datetime-edit-year-field {
+  color: transparent !important;
+}
+
+input[type="date"]:invalid::-webkit-datetime-edit-month-field {
+  color: transparent !important;
+}
+
+input[type="date"]:invalid::-webkit-datetime-edit-day-field {
+  color: transparent !important;
+}
+
+/* ============================================
+   كلاسات Tailwind المخصصة للاستخدام المباشر
+   ============================================ */
+
+@layer utilities {
+  .date-input-rtl {
+    direction: ltr !important;
+    text-align: right !important;
+    font-family: var(--font-sans) !important;
+    padding: 0.5rem 1rem;
+    padding-left: 2.5rem !important;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+    background-color: #ffffff;
+    width: 100%;
+    min-height: 42px;
+    -webkit-appearance: textfield !important;
+    appearance: textfield !important;
+    position: relative;
+  }
+  
+  .date-input-rtl:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  .date-input-rtl::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(0.4);
+    position: absolute;
+    left: 0.75rem;
+    right: auto !important;
+  }
+  
+  .date-input-rtl::-webkit-datetime-edit {
+    direction: ltr !important;
+    text-align: right !important;
+    unicode-bidi: plaintext !important;
+  }
+  
+  .date-input-rtl::-webkit-datetime-edit-text {
+    direction: ltr !important;
+    unicode-bidi: plaintext !important;
+  }
+  
+  .date-input-rtl::-webkit-datetime-edit-year-field {
+    direction: ltr !important;
+    unicode-bidi: plaintext !important;
+  }
+  
+  .date-input-rtl::-webkit-datetime-edit-month-field {
+    direction: ltr !important;
+    unicode-bidi: plaintext !important;
+  }
+  
+  .date-input-rtl::-webkit-datetime-edit-day-field {
+    direction: ltr !important;
+    unicode-bidi: plaintext !important;
+  }
+  
+  .date-input-rtl::-webkit-datetime-edit-fields-wrapper {
+    direction: ltr !important;
+  }
+  
+  .date-input-rtl:invalid::-webkit-datetime-edit {
+    color: transparent !important;
+  }
+  
+  .date-input-rtl:invalid::-webkit-datetime-edit-text {
+    color: transparent !important;
+  }
+  
+  .date-input-rtl:invalid::-webkit-datetime-edit-year-field {
+    color: transparent !important;
+  }
+  
+  .date-input-rtl:invalid::-webkit-datetime-edit-month-field {
+    color: transparent !important;
+  }
+  
+  .date-input-rtl:invalid::-webkit-datetime-edit-day-field {
+    color: transparent !important;
+  }
+}
+
+/* ============================================
+   حاوية التاريخ - للاستخدام مع المكونات
+   ============================================ */
+
+.date-wrapper {
+  direction: rtl;
+  width: 100%;
+}
+
+.date-wrapper .date-input-container {
+  position: relative;
+  direction: ltr;
+}
+
+.date-wrapper .date-input-container input[type="date"] {
+  width: 100%;
+}
+
+.date-wrapper .date-input-container .calendar-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #9ca3af;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.date-wrapper label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.date-wrapper .helper-text {
+  display: block;
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* ============================================
+   دعم إضافي للمتصفحات
+   ============================================ */
+
+/* إصلاح مشكلة عرض التاريخ في وضع RTL لبعض المتصفحات */
+[dir="rtl"] input[type="date"] {
+  direction: ltr !important;
+  text-align: right !important;
+}
+
+/* دعم Safari */
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  direction: ltr !important;
+}
+
+/* دعم الطباعة */
+@media print {
+  input[type="date"] {
+    border: 1px solid #000 !important;
+    background: white !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
